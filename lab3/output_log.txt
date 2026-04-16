@@ -1,0 +1,160 @@
+(pyspark-venv) nhatvd205@LAPTOP-NV611200:/mnt/e/UIT/Nam-3/Ki-2/thuc-hanh/big-data-analytics/lab3$ python3 main.py
+26/04/16 09:27:19 WARN Utils: Your hostname, LAPTOP-NV611200 resolves to a loopback address: 127.0.1.1; using 10.255.255.254 instead (on interface lo)
+26/04/16 09:27:20 WARN Utils: Set SPARK_LOCAL_IP if you need to bind to another address
+Setting default log level to "WARN".
+To adjust logging level use sc.setLogLevel(newLevel). For SparkR, use setLogLevel(newLevel).
+26/04/16 09:27:21 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+
+==========================================================================================
+BAI 1 - DIEM TRUNG BINH VA SO LUOT DANH GIA CUA MOI PHIM
+==========================================================================================
+1015 | Sunset Boulevard (1950) | avg=4.36 | count=7
+1025 | The Terminator (1984) | avg=4.06 | count=18
+1013 | The Godfather: Part II (1974) | avg=4.00 | count=17
+1012 | Psycho (1960) | avg=4.00 | count=2
+1043 | No Country for Old Men (2007) | avg=3.89 | count=18
+1037 | The Lord of the Rings: The Fellowship of the Ring (2001) | avg=3.89 | count=18
+1047 | The Social Network (2010) | avg=3.86 | count=7
+1039 | The Lord of the Rings: The Return of the King (2003) | avg=3.82 | count=11
+1020 | E.T. the Extra-Terrestrial (1982) | avg=3.67 | count=18
+1040 | Gladiator (2000) | avg=3.61 | count=18
+1028 | Fight Club (1999) | avg=3.50 | count=7
+1050 | Mad Max: Fury Road (2015) | avg=3.47 | count=18
+1010 | Lawrence of Arabia (1962) | avg=3.44 | count=18
+1030 | The Silence of the Lambs (1991) | avg=3.14 | count=7
+
+Phim co diem trung binh cao nhat va it nhat 5 luot danh gia:
+1015 | Sunset Boulevard (1950) | avg=4.36 | count=7
+
+==========================================================================================
+BAI 2 - DIEM TRUNG BINH THEO THE LOAI
+==========================================================================================
+Film-Noir | avg=4.36 | count=7
+Horror | avg=4.00 | count=2
+Mystery | avg=4.00 | count=2
+Fantasy | avg=3.86 | count=29
+Crime | avg=3.81 | count=42
+Drama | avg=3.76 | count=128
+Sci-Fi | avg=3.73 | count=54
+Action | avg=3.71 | count=54
+Thriller | avg=3.70 | count=27
+Family | avg=3.67 | count=18
+Adventure | avg=3.63 | count=83
+Biography | avg=3.56 | count=25
+
+==========================================================================================
+BAI 3 - DIEM TRUNG BINH MOI PHIM THEO GIOI TINH
+==========================================================================================
+1020 | E.T. the Extra-Terrestrial (1982) | gender=M | avg=3.81 | count=8
+1020 | E.T. the Extra-Terrestrial (1982) | gender=F | avg=3.55 | count=10
+1028 | Fight Club (1999) | gender=M | avg=3.50 | count=4
+1028 | Fight Club (1999) | gender=F | avg=3.50 | count=3
+1040 | Gladiator (2000) | gender=M | avg=3.59 | count=11
+1040 | Gladiator (2000) | gender=F | avg=3.64 | count=7
+1010 | Lawrence of Arabia (1962) | gender=F | avg=3.31 | count=8
+1010 | Lawrence of Arabia (1962) | gender=M | avg=3.55 | count=10
+1050 | Mad Max: Fury Road (2015) | gender=M | avg=4.00 | count=4
+1050 | Mad Max: Fury Road (2015) | gender=F | avg=3.32 | count=14
+1043 | No Country for Old Men (2007) | gender=M | avg=3.92 | count=12
+1043 | No Country for Old Men (2007) | gender=F | avg=3.83 | count=6
+1012 | Psycho (1960) | gender=F | avg=4.00 | count=2
+1015 | Sunset Boulevard (1950) | gender=M | avg=4.33 | count=6
+1015 | Sunset Boulevard (1950) | gender=F | avg=4.50 | count=1
+1013 | The Godfather: Part II (1974) | gender=M | avg=4.06 | count=9
+1013 | The Godfather: Part II (1974) | gender=F | avg=3.94 | count=8
+1037 | The Lord of the Rings: The Fellowship of the Ring (2001) | gender=M | avg=4.00 | count=8
+1037 | The Lord of the Rings: The Fellowship of the Ring (2001) | gender=F | avg=3.80 | count=10
+1039 | The Lord of the Rings: The Return of the King (2003) | gender=M | avg=3.75 | count=6
+1039 | The Lord of the Rings: The Return of the King (2003) | gender=F | avg=3.90 | count=5
+1030 | The Silence of the Lambs (1991) | gender=M | avg=3.33 | count=3
+1030 | The Silence of the Lambs (1991) | gender=F | avg=3.00 | count=4
+1047 | The Social Network (2010) | gender=M | avg=4.00 | count=4
+1047 | The Social Network (2010) | gender=F | avg=3.67 | count=3
+1025 | The Terminator (1984) | gender=F | avg=4.14 | count=11
+1025 | The Terminator (1984) | gender=M | avg=3.93 | count=7
+
+==========================================================================================
+BAI 4 - DIEM TRUNG BINH MOI PHIM THEO NHOM TUOI
+==========================================================================================
+1020 | E.T. the Extra-Terrestrial (1982) | age_group=25-34 | avg=3.58 | count=6
+1020 | E.T. the Extra-Terrestrial (1982) | age_group=45-54 | avg=4.00 | count=1
+1020 | E.T. the Extra-Terrestrial (1982) | age_group=35-44 | avg=3.81 | count=8
+1020 | E.T. the Extra-Terrestrial (1982) | age_group=18-24 | avg=3.50 | count=2
+1020 | E.T. the Extra-Terrestrial (1982) | age_group=55+ | avg=3.00 | count=1
+1028 | Fight Club (1999) | age_group=35-44 | avg=3.50 | count=2
+1028 | Fight Club (1999) | age_group=25-34 | avg=3.50 | count=3
+1028 | Fight Club (1999) | age_group=45-54 | avg=3.50 | count=2
+1040 | Gladiator (2000) | age_group=45-54 | avg=3.88 | count=4
+1040 | Gladiator (2000) | age_group=35-44 | avg=3.75 | count=6
+1040 | Gladiator (2000) | age_group=55+ | avg=3.00 | count=1
+1040 | Gladiator (2000) | age_group=18-24 | avg=3.50 | count=1
+1040 | Gladiator (2000) | age_group=25-34 | avg=3.42 | count=6
+1010 | Lawrence of Arabia (1962) | age_group=25-34 | avg=3.60 | count=5
+1010 | Lawrence of Arabia (1962) | age_group=45-54 | avg=3.62 | count=4
+1010 | Lawrence of Arabia (1962) | age_group=35-44 | avg=3.28 | count=9
+1050 | Mad Max: Fury Road (2015) | age_group=18-24 | avg=3.00 | count=1
+1050 | Mad Max: Fury Road (2015) | age_group=25-34 | avg=3.40 | count=10
+1050 | Mad Max: Fury Road (2015) | age_group=35-44 | avg=3.64 | count=7
+1043 | No Country for Old Men (2007) | age_group=25-34 | avg=3.83 | count=6
+1043 | No Country for Old Men (2007) | age_group=45-54 | avg=4.38 | count=4
+1043 | No Country for Old Men (2007) | age_group=18-24 | avg=3.50 | count=1
+1043 | No Country for Old Men (2007) | age_group=55+ | avg=3.50 | count=1
+1043 | No Country for Old Men (2007) | age_group=35-44 | avg=3.75 | count=6
+1012 | Psycho (1960) | age_group=25-34 | avg=4.50 | count=1
+1012 | Psycho (1960) | age_group=35-44 | avg=3.50 | count=1
+1015 | Sunset Boulevard (1950) | age_group=25-34 | avg=4.00 | count=2
+1015 | Sunset Boulevard (1950) | age_group=45-54 | avg=4.50 | count=2
+1015 | Sunset Boulevard (1950) | age_group=18-24 | avg=4.50 | count=1
+1015 | Sunset Boulevard (1950) | age_group=35-44 | avg=4.50 | count=2
+1013 | The Godfather: Part II (1974) | age_group=25-34 | avg=3.71 | count=7
+1013 | The Godfather: Part II (1974) | age_group=35-44 | avg=4.25 | count=8
+1013 | The Godfather: Part II (1974) | age_group=18-24 | avg=4.00 | count=2
+1037 | The Lord of the Rings: The Fellowship of the Ring (2001) | age_group=25-34 | avg=4.00 | count=5
+1037 | The Lord of the Rings: The Fellowship of the Ring (2001) | age_group=35-44 | avg=3.69 | count=8
+1037 | The Lord of the Rings: The Fellowship of the Ring (2001) | age_group=45-54 | avg=4.12 | count=4
+1037 | The Lord of the Rings: The Fellowship of the Ring (2001) | age_group=18-24 | avg=4.00 | count=1
+1039 | The Lord of the Rings: The Return of the King (2003) | age_group=45-54 | avg=4.00 | count=2
+1039 | The Lord of the Rings: The Return of the King (2003) | age_group=25-34 | avg=3.83 | count=3
+1039 | The Lord of the Rings: The Return of the King (2003) | age_group=35-44 | avg=3.75 | count=6
+1030 | The Silence of the Lambs (1991) | age_group=35-44 | avg=3.00 | count=1
+1030 | The Silence of the Lambs (1991) | age_group=45-54 | avg=3.33 | count=3
+1030 | The Silence of the Lambs (1991) | age_group=25-34 | avg=3.00 | count=3
+1047 | The Social Network (2010) | age_group=25-34 | avg=4.00 | count=4
+1047 | The Social Network (2010) | age_group=45-54 | avg=4.00 | count=1
+1047 | The Social Network (2010) | age_group=35-44 | avg=3.50 | count=2
+1025 | The Terminator (1984) | age_group=55+ | avg=3.75 | count=2
+1025 | The Terminator (1984) | age_group=18-24 | avg=4.50 | count=1
+1025 | The Terminator (1984) | age_group=25-34 | avg=4.10 | count=5
+1025 | The Terminator (1984) | age_group=35-44 | avg=4.00 | count=7
+1025 | The Terminator (1984) | age_group=45-54 | avg=4.17 | count=3
+
+==========================================================================================
+BAI 5 - DIEM TRUNG BINH THEO NGHE NGHIEP
+==========================================================================================
+Programmer | avg=4.25 | count=10
+Designer | avg=4.00 | count=13
+Student | avg=4.00 | count=8
+Consultant | avg=3.86 | count=14
+Nurse | avg=3.86 | count=11
+Journalist | avg=3.85 | count=17
+Artist | avg=3.73 | count=11
+Teacher | avg=3.70 | count=5
+Doctor | avg=3.69 | count=21
+Lawyer | avg=3.65 | count=17
+Salesperson | avg=3.65 | count=17
+Accountant | avg=3.58 | count=6
+Engineer | avg=3.56 | count=18
+Manager | avg=3.47 | count=16
+/mnt/e/UIT/Nam-3/Ki-2/thuc-hanh/big-data-analytics/lab3/main.py:198: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  lambda row: (datetime.utcfromtimestamp(row[3]).year, to_stat(row[2]))
+/mnt/e/UIT/Nam-3/Ki-2/thuc-hanh/big-data-analytics/lab3/main.py:198: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  lambda row: (datetime.utcfromtimestamp(row[3]).year, to_stat(row[2]))
+/mnt/e/UIT/Nam-3/Ki-2/thuc-hanh/big-data-analytics/lab3/main.py:198: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  lambda row: (datetime.utcfromtimestamp(row[3]).year, to_stat(row[2]))
+/mnt/e/UIT/Nam-3/Ki-2/thuc-hanh/big-data-analytics/lab3/main.py:198: DeprecationWarning: datetime.datetime.utcfromtimestamp() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.fromtimestamp(timestamp, datetime.UTC).
+  lambda row: (datetime.utcfromtimestamp(row[3]).year, to_stat(row[2]))
+
+==========================================================================================
+BAI 6 - DIEM TRUNG BINH VA SO LUOT DANH GIA THEO NAM
+==========================================================================================
+2020 | avg=3.75 | count=184
