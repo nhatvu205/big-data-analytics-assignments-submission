@@ -21,10 +21,7 @@ class PersonDetector:
         self.confidence = confidence
         self.device = device
 
-    def detect(self, frame_b64: str) -> Tuple[List[dict], int]:
-        image_bytes = base64.b64decode(frame_b64)
-        image_array = np.frombuffer(image_bytes, dtype=np.uint8)
-        frame = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+    def detect_frame(self, frame) -> Tuple[List[dict], int]:
         if frame is None:
             raise ValueError("Could not decode input frame")
 
@@ -43,3 +40,9 @@ class PersonDetector:
                     }
                 )
         return boxes, len(boxes)
+
+    def detect(self, frame_b64: str) -> Tuple[List[dict], int]:
+        image_bytes = base64.b64decode(frame_b64)
+        image_array = np.frombuffer(image_bytes, dtype=np.uint8)
+        frame = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+        return self.detect_frame(frame)
