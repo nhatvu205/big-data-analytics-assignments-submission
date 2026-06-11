@@ -3,6 +3,7 @@
 import base64
 import json
 import logging
+import uuid
 import time
 from typing import Optional
 
@@ -36,8 +37,9 @@ def run_camera_server(
         raise FileNotFoundError(f"Could not open video source: {video_path}")
 
     frame_id = 0
+    run_id = str(uuid.uuid4())
     interval = 1.0 / max(fps_limit, 1)
-    logger.info("Camera server started. Publishing frames to topic '%s'", RAW_FRAMES_TOPIC)
+    logger.info("Camera server started. run_id=%s | Publishing frames to topic '%s'", run_id, RAW_FRAMES_TOPIC)
 
     try:
         while cap.isOpened():
@@ -55,6 +57,7 @@ def run_camera_server(
                 continue
 
             message = {
+                "run_id": run_id,
                 "frame_id": frame_id,
                 "timestamp": time.time(),
                 "source_id": source_id,
@@ -63,7 +66,7 @@ def run_camera_server(
                 "height": target_height,
             }
             producer.send(RAW_FRAMES_TOPIC, value=message)
-            logger.info("Sent frame %s", frame_id)
+            logger.info("Sent frame %s (run_id=%s)", frame_id, run_id)
 
             frame_id += 1
             if max_frames is not None and frame_id >= max_frames:

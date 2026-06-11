@@ -37,6 +37,7 @@ def run_processing_server(kafka_bootstrap: str = "localhost:9092", model_name: s
             processing_time_ms = round((time.time() - start_time) * 1000, 2)
 
             result = {
+                "run_id": frame_message.get("run_id"),
                 "frame_id": frame_message["frame_id"],
                 "timestamp": frame_message["timestamp"],
                 "processed_at": time.time(),
@@ -46,7 +47,13 @@ def run_processing_server(kafka_bootstrap: str = "localhost:9092", model_name: s
                 "processing_time_ms": processing_time_ms,
             }
             producer.send(DETECTION_RESULTS_TOPIC, value=result)
-            logger.info("Frame %s processed: %s people detected in %sms", result["frame_id"], count, processing_time_ms)
+            logger.info(
+                "Frame %s processed: %s people detected in %sms (run_id=%s)",
+                result["frame_id"],
+                count,
+                processing_time_ms,
+                result["run_id"],
+            )
     finally:
         consumer.close()
         producer.flush()

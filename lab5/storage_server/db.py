@@ -37,6 +37,7 @@ class StorageDB:
                 """
                 CREATE TABLE IF NOT EXISTS detections (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    run_id TEXT,
                     frame_id INTEGER,
                     timestamp REAL,
                     processed_at REAL,
@@ -47,6 +48,12 @@ class StorageDB:
                 )
                 """
             )
+            columns = {
+                row[1]
+                for row in self.conn.execute("PRAGMA table_info(detections)").fetchall()
+            }
+            if "run_id" not in columns:
+                self.conn.execute("ALTER TABLE detections ADD COLUMN run_id TEXT")
             self.conn.commit()
 
     def save(self, result: Dict[str, Any]) -> None:
@@ -58,10 +65,11 @@ class StorageDB:
         self.conn.execute(
             """
             INSERT INTO detections (
-                frame_id, timestamp, processed_at, source_id, person_count, bounding_boxes, processing_time_ms
-            ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                run_id, frame_id, timestamp, processed_at, source_id, person_count, bounding_boxes, processing_time_ms
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             """,
             (
+                result.get("run_id"),
                 result["frame_id"],
                 result["timestamp"],
                 result.get("processed_at"),
@@ -80,7 +88,7 @@ class StorageDB:
         assert self.conn is not None
         cursor = self.conn.execute(
             """
-            SELECT frame_id, timestamp, processed_at, source_id, person_count, bounding_boxes, processing_time_ms
+            SELECT run_id, frame_id, timestamp, processed_at, source_id, person_count, bounding_boxes, processing_time_ms
             FROM detections ORDER BY timestamp DESC LIMIT ?
             """,
             (limit,),
@@ -89,13 +97,14 @@ class StorageDB:
         for row in cursor.fetchall():
             rows.append(
                 {
-                    "frame_id": row[0],
-                    "timestamp": row[1],
-                    "processed_at": row[2],
-                    "source_id": row[3],
-                    "person_count": row[4],
-                    "bounding_boxes": json.loads(row[5]),
-                    "processing_time_ms": row[6],
+                    "run_id": row[0],
+                    "frame_id": row[1],
+                    "timestamp": row[2],
+                    "processed_at": row[3],
+                    "source_id": row[4],
+                    "person_count": row[5],
+                    "bounding_boxes": json.loads(row[6]),
+                    "processing_time_ms": row[7],
                 }
             )
         return rows
