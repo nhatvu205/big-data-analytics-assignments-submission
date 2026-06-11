@@ -26,9 +26,10 @@ Kafka is the Big Data layer: it decouples producers and consumers, supports hori
 - `processing_server/`: YOLO inference consumer/producer
 - `storage_server/`: persistence consumer + FastAPI API
 - `dashboard/`: Streamlit app
-- `utils/`: Kafka and video helpers
+- `utils/`: Kafka and visualization helpers
 - `notebooks/full_pipeline_colab.ipynb`: end-to-end Colab notebook
 - `results/`: sample output artifacts
+- `videos/`: place your input video here
 
 ## How to run on Google Colab
 1. Open `notebooks/full_pipeline_colab.ipynb` in Google Colab.
@@ -47,9 +48,10 @@ docker compose up -d
 pip install -r requirements.txt
 ```
 
-### 3. Prepare a sample video
-```bash
-python -c "from utils.video_downloader import prepare_demo_video; print(prepare_demo_video())"
+### 3. Add your input video
+Place your video in the `videos/` folder, for example:
+```text
+videos/input.mp4
 ```
 
 ### 4. Start the services
@@ -58,7 +60,7 @@ In separate terminals:
 python -c "from storage_server.consumer import run_storage_consumer; run_storage_consumer()"
 python -m uvicorn storage_server.api:app --host 0.0.0.0 --port 8000
 python -c "from processing_server.consumer import run_processing_server; run_processing_server()"
-python -c "from camera_server.producer import run_camera_server; run_camera_server('sample_video.mp4')"
+python -c "from camera_server.producer import run_camera_server; run_camera_server('videos/input.mp4')"
 ```
 
 ### 5. Open the dashboard
@@ -78,9 +80,8 @@ Although this assignment uses a single camera, the architecture is built for Big
 - storage and analytics can consume the same stream independently
 - this is a simplified Kappa-style streaming pipeline
 
-## Demo data strategy
-- Default: public CC0 video download via `yt-dlp`
-- Fallback: synthetic video generated with OpenCV for offline reliability
+## Input data
+Place a real test video under `videos/` and pass that path to the camera server.
 
 ## Sample results
 See `results/sample_output.json` and `results/annotated_frame.jpg`.
