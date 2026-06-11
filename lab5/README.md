@@ -1,7 +1,13 @@
-# People Counting System — Big Data Architecture
+# Lab 5 - Hệ thống đếm số lượng người hiện diện trong camera sử dụng Apache Kafka
+Sinh viên thực hiện: 23521104 - Vũ Đình Nhật
+## Giới thiệu
+Bài lab xây dựng một hệ thống đếm số lượng người trong khung hình theo kiến trúc nhiều thành phần, trong đó:
+- **Camera Server** nhận dữ liệu từ camera hoặc video đầu vào.
+- **Processing Server** thực hiện nhận diện người bằng mô hình YOLOv8.
+- **Storage Server** lưu kết quả nhận diện và cung cấp API truy vấn.
+- **Kafka** đóng vai trò message broker trong kiến trúc streaming, thể hiện ngữ cảnh xử lý dữ liệu lớn.
 
-## Overview
-This project implements a distributed people-counting pipeline for a single camera feed using a **Big Data streaming architecture**.
+Kiến trúc tổng quát:
 
 ```text
 [Camera / Video]
@@ -10,78 +16,66 @@ This project implements a distributed people-counting pipeline for a single came
 Camera Server -> Kafka topic: raw-frames -> Processing Server -> Kafka topic: detection-results -> Storage Server/API
 ```
 
-Kafka is the Big Data layer: it decouples producers and consumers, supports horizontal scaling, and mirrors how real-time streaming systems ingest data from multiple cameras.
+---
 
-## Tech stack
-- Apache Kafka: streaming backbone
-- YOLOv8n: person detection
-- MongoDB: default storage backend
-- SQLite: fallback storage backend
-- FastAPI: query API
-- Streamlit: lightweight dashboard
-- Google Colab: primary demo environment
+## 1. Triển khai server trên Google Colab
 
-## Repository structure
-- `camera_server/`: frame producer
-- `processing_server/`: YOLO inference consumer/producer
-- `storage_server/`: persistence consumer + FastAPI API
-- `dashboard/`: Streamlit app
-- `utils/`: Kafka and visualization helpers
-- `notebooks/full_pipeline_colab.ipynb`: end-to-end Colab notebook
-- `results/`: sample output artifacts
-- `videos/`: place your input video here
+Phần triển khai trên Colab được dùng để chạy pipeline end-to-end trong môi trường có GPU, phù hợp cho việc demo nhanh và kiểm tra khả năng xử lý của hệ thống.
 
-## How to run on Google Colab
-1. Open `notebooks/full_pipeline_colab.ipynb` in Google Colab.
-2. Select **Runtime > Change runtime type > T4 GPU**.
-3. Run all cells.
-4. Wait for the pipeline to process frames, then inspect `results/sample_output.json` and `results/annotated_frame.jpg`.
+### Thành phần liên quan
+- Notebook chính: `notebooks/full_pipeline_colab.ipynb`
+- Source code sử dụng trong notebook:
+  - `camera_server/`
+  - `processing_server/`
+  - `storage_server/`
+  - `utils/`
 
-## How to run locally
-### 1. Start Kafka and MongoDB
-```bash
-docker compose up -d
-```
+### Mô tả sơ bộ
+Trong notebook Colab, hệ thống thực hiện các bước chính:
+1. Cài đặt thư viện cần thiết.
+2. Khởi động Kafka.
+3. Nạp source code từ repository.
+4. Nhận video đầu vào từ thư mục `videos/`.
+5. Chạy các server trong cùng runtime.
+6. Lưu kết quả nhận diện vào `results/sample_output.json` và `results/annotated_frame.jpg`.
+---
 
-### 2. Install Python dependencies
-```bash
-pip install -r requirements.txt
-```
+## 2. Triển khai ở local
 
-### 3. Add your input video
-Place your video in the `videos/` folder, for example:
-```text
-videos/input.mp4
-```
+Phần triển khai local được dùng để chạy hệ thống trên máy cá nhân, phục vụ việc kiểm thử từng thành phần và demo trực tiếp với webcam hoặc video.
 
-### 4. Start the services
-In separate terminals:
-```bash
-python -c "from storage_server.consumer import run_storage_consumer; run_storage_consumer()"
-python -m uvicorn storage_server.api:app --host 0.0.0.0 --port 8000
-python -c "from processing_server.consumer import run_processing_server; run_processing_server()"
-python -c "from camera_server.producer import run_camera_server; run_camera_server('videos/input.mp4')"
-```
+### Thành phần liên quan
+- Source code chính:
+  - `camera_server/producer.py`
+  - `processing_server/consumer.py`
+  - `processing_server/detector.py`
+  - `storage_server/consumer.py`
+  - `storage_server/api.py`
+- File cấu hình/chạy local:
+  - `docker-compose.yml`
+- Script xem trực tiếp camera/video có bounding box:
+  - `live_viewer.py`
 
-### 5. Open the dashboard
-```bash
-streamlit run dashboard/app.py
-```
+### Mô tả sơ bộ
+Khi chạy local, hệ thống được chia thành các phần:
+1. **Docker** dùng để khởi động Kafka và MongoDB.
+2. **Processing Server** nhận frame từ Kafka và chạy YOLOv8 để phát hiện người.
+3. **Storage Server** lưu kết quả và cung cấp API tại `http://localhost:8000/docs`.
+4. **Live Viewer** dùng để mở webcam hoặc video và hiển thị bounding box trực tiếp trên màn hình.
 
-## API endpoints
-- `GET /health`
-- `GET /latest?limit=10`
-- `GET /stats`
+### Kết quả minh họa
+- Hình 4: Docker containers của Kafka và MongoDB khi chạy local.
+- Hình 5: Terminal chạy Processing Server và Storage Server.
+- Hình 6: Cửa sổ preview webcam/video với bounding box và số lượng người.
+- Hình 7: API docs hoặc kết quả trả về từ endpoint `/latest` và `/stats`.
 
-## Big Data justification
-Although this assignment uses a single camera, the architecture is built for Big Data streaming:
-- many camera producers can publish to Kafka simultaneously
-- multiple processing workers can scale out by Kafka partitions / consumer groups
-- storage and analytics can consume the same stream independently
-- this is a simplified Kappa-style streaming pipeline
+> [Chèn hình kết quả local ở đây]
 
-## Input data
-Place a real test video under `videos/` and pass that path to the camera server.
+---
 
-## Sample results
-See `results/sample_output.json` and `results/annotated_frame.jpg`.
+## Kết quả đầu ra
+Các file kết quả mẫu của hệ thống nằm tại:
+- `results/sample_output.json`
+- `results/annotated_frame.jpg`
+
+
