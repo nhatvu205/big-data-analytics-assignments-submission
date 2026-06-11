@@ -47,8 +47,9 @@ def run_camera_server(
                 cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
                 continue
 
-            frame = cv2.resize(frame, (640, 480))
-            ok, buffer = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 70])
+            target_width, target_height = 480, 360
+            frame = cv2.resize(frame, (target_width, target_height))
+            ok, buffer = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 50])
             if not ok:
                 logger.warning("Skipping frame %s because JPEG encoding failed", frame_id)
                 continue
@@ -58,8 +59,8 @@ def run_camera_server(
                 "timestamp": time.time(),
                 "source_id": source_id,
                 "frame_data": base64.b64encode(buffer).decode("utf-8"),
-                "width": 640,
-                "height": 480,
+                "width": target_width,
+                "height": target_height,
             }
             producer.send(RAW_FRAMES_TOPIC, value=message)
             logger.info("Sent frame %s", frame_id)
