@@ -1,0 +1,57 @@
+[
+  {
+    "frame_id": 0,
+    "timestamp": 1710000000.0,
+    "processed_at": 1710000000.2,
+    "source_id": "camera-1",
+    "person_count": 2,
+    "bounding_boxes": [
+      {
+        "x1": 82,
+        "y1": 61,
+        "x2": 124,
+        "y2": 168,
+        "confidence": 0.933
+      },
+      {
+        "x1": 301,
+        "y1": 75,
+        "x2": 348,
+        "y2": 184,
+        "confidence": 0.901
+      }
+    ],
+    "processing_time_ms": 41.7
+  },
+  {
+    "frame_id": 1,
+    "timestamp": 1710000000.5,
+    "processed_at": 1710000000.7,
+    "source_id": "camera-1",
+    "person_count": 3,
+    "bounding_boxes": [
+      {
+        "x1": 85,
+        "y1": 63,
+        "x2": 126,
+        "y2": 170,
+        "confidence": 0.928
+      },
+      {
+        "x1": 304,
+        "y1": 77,
+        "x2": 352,
+        "y2": 186,
+        "confidence": 0.907
+      },
+      {
+        "x1": 460,
+        "y1": 80,
+        "x2": 502,
+        "y2": 192,
+        "confidence": 0.874
+      }
+    ],
+    "processing_time_ms": 43.1
+  }
+]
